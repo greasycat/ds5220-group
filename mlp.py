@@ -34,7 +34,7 @@ def relu_derivative(x):
 
 class MLP:
 
-    def __init__(self, layer_sizes, beta1=0.9, beta2=0.999, epsilon=1e-8, random_seed=42):
+    def __init__(self, layer_sizes, beta1=0.9, beta2=0.999, epsilon=1e-8, random_seed=None):
         # layer_sizes includes input and output layers
         self.layer_sizes = layer_sizes
         self.weights = []
@@ -54,7 +54,8 @@ class MLP:
         self.v_biases = []
 
         # Glorot initialization
-        np.random.seed(random_seed)
+        if random_seed is not None:
+            np.random.seed(random_seed)
         for i in range(1, self.n_layers):
             scale = np.sqrt(2.0 / (layer_sizes[i] + layer_sizes[i-1]))
             self.weights.append(np.random.randn(layer_sizes[i], layer_sizes[i-1]) * scale)
